@@ -29,9 +29,13 @@ namespace FancyScrollView
         protected virtual FancyCell<TItemData, TContext>[] InstantiateCells()
         {
             return Enumerable.Range(0, Context.GetGroupCount())
-                .Select(_ => Instantiate(Context.CellTemplate, transform))
-                .Select(x => x.GetComponent<FancyCell<TItemData, TContext>>())
+                .Select(_ => InstantiateCell(Context.CellTemplate, transform))
                 .ToArray();
+        }
+
+        protected virtual FancyCell<TItemData, TContext> InstantiateCell(GameObject prefab, Transform container)
+        {
+            return Instantiate(prefab, container).GetComponent<FancyCell<TItemData, TContext>>();
         }
 
         /// <inheritdoc/>
