@@ -138,7 +138,7 @@ namespace FancyScrollView
             var addCount = Mathf.CeilToInt((1f - firstPosition) / cellInterval) - pool.Count;
             for (var i = 0; i < addCount; i++)
             {
-                var cell = Instantiate(CellPrefab, cellContainer).GetComponent<FancyCell<TItemData, TContext>>();
+                var cell = InstantiateCell(CellPrefab, cellContainer);
                 if (cell == null)
                 {
                     throw new MissingComponentException(string.Format(
@@ -151,6 +151,11 @@ namespace FancyScrollView
                 cell.SetVisible(false);
                 pool.Add(cell);
             }
+        }
+
+        protected virtual FancyCell<TItemData, TContext> InstantiateCell(GameObject prefab, Transform container)
+        {
+            return Instantiate(prefab, container).GetComponent<FancyCell<TItemData, TContext>>();
         }
 
         void UpdateCells(float firstPosition, int firstIndex, bool forceRefresh)
